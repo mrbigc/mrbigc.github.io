@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\l.png">
+    <title>Mr Bixc</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #5ebd95, #110555);
+            background-size: 400% 400%;
+            animation: gradientAnimation 30s ease infinite;
+            color: #fff;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 50px;
+            height: auto;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .download-button {
+            display: inline-block;
+            width: 300px;
+            height: 250px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #2e2e2e;
+            box-shadow: 0 4px 8px rgba(155, 155, 155, 0.2);
+            transition: background-color 0.3s, transform 0.3s;
+            border: 2px solid #c000a0;
+            border-radius: 10px;
+            text-decoration: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            position: relative;
+            padding: 20px;
+            animation: borderColorChange 5s infinite;
+        }
+        @keyframes borderColorChange {
+            0% { border-color: #c000a0; }
+            25% { border-color: #00c0a0; }
+            50% { border-color: #a0c000; }
+            75% { border-color: #a000c0; }
+            100% { border-color: #c000a0; }
+        }
+        .download-button img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .download-button span {
+            margin-top: 10px;
+            text-align: left;
+            width: 100%;
+        }
+        .download-button .last-update {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: #ccc;
+            text-align: right;
+            font-family: 'Tahoma', sans-serif;
+            font-weight: bold;
+        }
+        .download-button:hover {
+            background-color: #555555;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <img src="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\l.png" alt="Logo" class="logo">
+    <h1>Bigc Genuis</h1>
+    <div class="buttons-container">
+        <a href="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\Bank.mcaddon" download class="download-button">
+            <img src="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\bank.jpg" alt="Download Icon">
+            <span>Minecraft แจกแอดออน ธนาคาร สามารถกำหนดดอกเบี้ยได้ Roleplay</span>
+            <span class="last-update">Last update 9/12/24</span>
+        </a>
+        <a href="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\AnotherAddon.mcaddon" download class="download-button">
+            <img src="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\scarp.jpg" alt="Download Icon">
+            <span>Minecraft แจกแอดออน เก็บเศษเหล็ก Roleplay</span>
+            <span class="last-update">Last update 9/12/24</span>
+        </a>
+        <a href="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\AnotherAddon.mcaddon" download class="download-button">
+            <img src="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\money.png" alt="Download Icon">
+            <span>Minecraft แจกแอดออน โอนเงิน แบบ Roleplay</span>
+            <span class="last-update">Last update 9/12/24</span>
+        </a>
+        <a href="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\AnotherAddon.mcaddon" download class="download-button">
+            <img src="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\health.png" alt="Download Icon">
+            <span>Minecraft แจกแอดออนหมอ Version 1/2 Roleplay</span>
+            <span class="last-update">Last update 9/12/24</span>
+        </a>
+         <a href="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\AnotherAddon.mcaddon" download class="download-button">
+            <img src="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\buy.png" alt="Download Icon">
+            <span>Minecraft แจกแอดซื้อขาย กำหนดได้</span>
+            <span class="last-update">Last update 9/12/24</span>
+        </a>
+        <a href="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\AnotherAddon.mcaddon" download class="download-button">
+            <img src="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\police.png" alt="Download Icon">
+            <span>Minecraft แจกแอดออน ตำรวจจับโจร Roleplay</span>
+            <span class="last-update">Last update 9/12/24</span>
+        </a>
+        <a href="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\AnotherAddon.mcaddon" download class="download-button">
+            <img src="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\random.png" alt="Download Icon">
+            <span>Minecraft แจกแอดออน สุ่มของ กำหนดของได้ เวอร์ชั่นล่าสุด!!</span>
+            <span class="last-update">Last update 23/10/24</span>
+        </a>
+        <a href="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\AnotherAddon.mcaddon" download class="download-button">
+            <img src="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\poon.png" alt="Download Icon">
+            <span>Minecraft แจกแอดออนจกปูน Roleplay</span>
+            <span class="last-update">Last update 23/10/24</span>
+        </a>
+        <a href="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\AnotherAddon.mcaddon" download class="download-button">
+            <img src="C:\Users\Hddhj\OneDrive\เอกสาร\BigcWeb\premuim.png" alt="Download Icon">
+            <span>Minecraft รีวิวแอดออน หมอ Version 2/2 Roleplay</span>
+            <span class="last-update">Last update 23/10/24</span>
+        </a>
+    </div>
+</body>
+</html>
