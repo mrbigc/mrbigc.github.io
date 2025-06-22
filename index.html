@@ -1,19 +1,16 @@
-<div class="footer"></div>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="l.png">
     <title>Bigc Genuis</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, #5ebd95, #110555);
             background-size: 400% 400%;
             animation: gradientAnimation 30s ease infinite;
@@ -25,145 +22,197 @@
             100% { background-position: 0% 50%; }
         }
         .logo {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 50px;
+            width: 60px;
             height: auto;
+            margin: 20px 0 10px 0;
+            display: block;
         }
         h1 {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 2px;
         }
-        .buttons-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
+        .card {
+            border: none;
+            border-radius: 18px;
+            background: rgba(34, 34, 54, 0.92);
+            box-shadow: 0 6px 24px 0 rgba(0,0,0,0.18);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .download-button {
-            display: inline-block;
-            width: 300px;
-            height: 250px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #2e2e2e;
-            box-shadow: 0 4px 8px rgba(155, 155, 155, 0.2);
-            transition: background-color 0.3s, transform 0.3s;
+        .card:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 12px 32px 0 rgba(0,0,0,0.28);
             border: 2px solid #c000a0;
-            border-radius: 10px;
-            text-decoration: none;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            position: relative;
-            padding: 20px;
-            animation: borderColorChange 5s infinite;
         }
-        @keyframes borderColorChange {
-            0% { border-color: #c000a0; }
-            25% { border-color: #00c0a0; }
-            50% { border-color: #a0c000; }
-            75% { border-color: #a000c0; }
-            100% { border-color: #c000a0; }
+        .card-img-top {
+            border-radius: 18px 18px 0 0;
+            object-fit: cover;
+            height: 140px;
+            background: #222;
         }
-        .download-button img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
         }
-        .download-button span {
-            margin-top: 10px;
-            text-align: left;
-            width: 100%;
+        .card-text {
+            color: #e0e0e0;
+            font-size: 0.98rem;
         }
-        .download-button .last-update {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            font-size: 12px;
-            color: #ccc;
-            text-align: right;
+        .last-update {
+            font-size: 0.85rem;
+            color: #bdbdbd;
             font-family: 'Tahoma', sans-serif;
             font-weight: bold;
-        }
-        .download-button:hover {
-            background-color: #555555;
-            transform: scale(1.02);
+            margin-top: 10px;
         }
         .footer {
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        padding: 10px 0;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        font-size: 14px;
+            background: rgba(30, 30, 40, 0.98);
+            color: #fff;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 15px;
+            letter-spacing: 1px;
+            margin-top: 40px;
+        }
+        @media (max-width: 767.98px) {
+            .logo {
+                margin: 10px auto 0 auto;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .card-img-top {
+                height: 110px;
+            }
         }
     </style>
 </head>
 <body>
-    <img src="l.png" alt="Logo" class="logo">
-    <h1>Bigc Genuis</h1>
-    <div class="buttons-container">
-        <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Bank/Bank.mcaddon" download class="download-button">
-            <img src="bank.jpg" alt="Download Icon">
-            <span>Minecraft แจกแอดออน ธนาคาร สามารถกำหนดดอกเบี้ยได้ Roleplay</span>
-            <span class="last-update">Last update 26/3/25</span>
-        </a>
-        <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Scrap%20Addon/Scrap.mcaddon" download class="download-button">
-            <img src="scarp.jpg" alt="Download Icon">
-            <span>Minecraft แจกแอดออน เก็บเศษเหล็ก Roleplay</span>
-            <span class="last-update">Last update 26/3/25</span>
-        </a>
-        <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Transfer%20money/Transfer%20money.mcaddon" download class="download-button">
-            <img src="money.png" alt="Download Icon">
-            <span>Minecraft แจกแอดออน โอนเงิน แบบ Roleplay</span>
-            <span class="last-update">Last update 26/3/25</span>
-        </a>
-        <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Medic/Medic.mcaddon" download class="download-button">
-            <img src="health.png" alt="Download Icon">
-            <span>Minecraft แจกแอดออนหมอ Version 1/2 Roleplay</span>
-            <span class="last-update">Last update 26/3/25</span>
-        </a>
-         <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Buy%20&%20Sell/Buy%20&%20Sell.mcaddon" download class="download-button">
-            <img src="buy.png" alt="Download Icon">
-            <span>Minecraft แจกแอดซื้อขาย กำหนดได้</span>
-            <span class="last-update">Last update 26/3/25</span>
-        </a>
-        <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Police/Police.mcaddon" download class="download-button">
-            <img src="police.png" alt="Download Icon">
-            <span>Minecraft แจกแอดออน ตำรวจจับโจร Roleplay</span>
-            <span class="last-update">Last update 26/3/25</span>
-        </a>
-        <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Random%20items/Random%20items.mcaddon" download class="download-button">
-            <img src="random.png" alt="Download Icon">
-            <span>Minecraft แจกแอดออน สุ่มของ กำหนดของได้ เวอร์ชั่นล่าสุด!!</span>
-            <span class="last-update">Last update 23/10/24</span>
-        </a>
-        <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Cement/Cement.mcaddon" download class="download-button">
-            <img src="poon.png" alt="Download Icon">
-            <span>Minecraft แจกแอดออนจกปูน Roleplay</span>
-            <span class="last-update">Last update 23/10/24</span>
-        </a>
-        <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Vehicle%20System/Vehicle%20System.mcpack" download class="download-button">
-            <img src="vehicle.png" alt="Download Icon">
-            <span>Minecraft แจกแอดออน เกี่ยวกับยานพาหนะ Roleplay</span>
-            <span class="last-update">Last update 26/3/25</span>
-        </a>
-        <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/RealTime%20Sync/RealTimeSync.mcpack" download class="download-button">
-            <img src="realtime.png" alt="Download Icon">
-            <span>Minecraft Addon RealTime Sync</span>
-            <span class="last-update">Last update 26/3/25</span>
-        </a>
+    <div class="container py-4">
+        <img src="l.png" alt="Logo" class="logo mx-auto d-block">
+        <h1>Bigc Genuis</h1>
+        <div class="row g-4">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Bank/Bank.mcaddon" download class="text-decoration-none">
+                    <div class="card h-100">
+                        <img src="bank.jpg" class="card-img-top" alt="Download Icon">
+                        <div class="card-body">
+                            <div class="card-title">Minecraft แจกแอดออน ธนาคาร สามารถกำหนดดอกเบี้ยได้ Roleplay</div>
+                            <div class="last-update">Last update 26/3/25</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Scrap%20Addon/Scrap.mcaddon" download class="text-decoration-none">
+                    <div class="card h-100">
+                        <img src="scarp.jpg" class="card-img-top" alt="Download Icon">
+                        <div class="card-body">
+                            <div class="card-title">Minecraft แจกแอดออน เก็บเศษเหล็ก Roleplay</div>
+                            <div class="last-update">Last update 26/3/25</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Transfer%20money/Transfer%20money.mcaddon" download class="text-decoration-none">
+                    <div class="card h-100">
+                        <img src="money.png" class="card-img-top" alt="Download Icon">
+                        <div class="card-body">
+                            <div class="card-title">Minecraft แจกแอดออน โอนเงิน แบบ Roleplay</div>
+                            <div class="last-update">Last update 26/3/25</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Medic/Medic.mcaddon" download class="text-decoration-none">
+                    <div class="card h-100">
+                        <img src="health.png" class="card-img-top" alt="Download Icon">
+                        <div class="card-body">
+                            <div class="card-title">Minecraft แจกแอดออนหมอ Version 1/2 Roleplay</div>
+                            <div class="last-update">Last update 26/3/25</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Buy%20&%20Sell/Buy%20&%20Sell.mcaddon" download class="text-decoration-none">
+                    <div class="card h-100">
+                        <img src="buy.png" class="card-img-top" alt="Download Icon">
+                        <div class="card-body">
+                            <div class="card-title">Minecraft แจกแอดซื้อขาย กำหนดได้</div>
+                            <div class="last-update">Last update 26/3/25</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Police/Police.mcaddon" download class="text-decoration-none">
+                    <div class="card h-100">
+                        <img src="police.png" class="card-img-top" alt="Download Icon">
+                        <div class="card-body">
+                            <div class="card-title">Minecraft แจกแอดออน ตำรวจจับโจร Roleplay</div>
+                            <div class="last-update">Last update 26/3/25</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Random%20items/Random%20items.mcaddon" download class="text-decoration-none">
+                    <div class="card h-100">
+                        <img src="random.png" class="card-img-top" alt="Download Icon">
+                        <div class="card-body">
+                            <div class="card-title">Minecraft แจกแอดออน สุ่มของ กำหนดของได้ เวอร์ชั่นล่าสุด!!</div>
+                            <div class="last-update">Last update 23/10/24</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Cement/Cement.mcaddon" download class="text-decoration-none">
+                    <div class="card h-100">
+                        <img src="poon.png" class="card-img-top" alt="Download Icon">
+                        <div class="card-body">
+                            <div class="card-title">Minecraft แจกแอดออนจกปูน Roleplay</div>
+                            <div class="last-update">Last update 23/10/24</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Vehicle%20System/Vehicle%20System.mcpack" download class="text-decoration-none">
+                    <div class="card h-100">
+                        <img src="vehicle.png" class="card-img-top" alt="Download Icon">
+                        <div class="card-body">
+                            <div class="card-title">Minecraft แจกแอดออน เกี่ยวกับยานพาหนะ Roleplay</div>
+                            <div class="last-update">Last update 26/3/25</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <a href="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/RealTime%20Sync/RealTimeSync.mcpack" download class="text-decoration-none">
+                    <div class="card h-100">
+                        <img src="realtime.png" class="card-img-top" alt="Download Icon">
+                        <div class="card-body">
+                            <div class="card-title">Minecraft Addon RealTime Sync</div>
+                            <div class="last-update">Last update 26/3/25</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="footer">
-        <p>Copyright © 2024-2025 Bigc Genuis. All rights reserved.</p>
-    </div>    
+    <div class="footer mt-5">
+        <p class="mb-0">Copyright © 2024-2025 Bigc Genuis. All rights reserved.</p>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
