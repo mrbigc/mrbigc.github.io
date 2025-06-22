@@ -7,55 +7,68 @@
     <title>Bigc Genuis</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         body {
             min-height: 100vh;
             font-family: 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, #232526, #414345 80%);
             color: #fff;
+            transition: background 0.4s, color 0.4s;
         }
         .logo {
-            width: 60px;
+            width: 70px;
             height: auto;
-            margin: 20px 0 10px 0;
+            margin: 30px 0 15px 0;
             display: block;
+            filter: drop-shadow(0 2px 8px #0008);
         }
         h1 {
-            margin-bottom: 30px;
-            font-size: 2.5em;
+            margin-bottom: 35px;
+            font-size: 2.7em;
             text-align: center;
             font-weight: bold;
             letter-spacing: 2px;
             color: #f8f9fa;
-            text-shadow: 0 2px 12px #00000044;
+            text-shadow: 0 2px 16px #00000055;
         }
         .card {
             border: none;
             border-radius: 1.5rem;
-            background: #23272b;
+            background: var(--bs-card-bg, #23272b);
             box-shadow: 0 6px 24px 0 rgba(0,0,0,0.18);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
             cursor: pointer;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
-        .card:hover {
-            transform: translateY(-6px) scale(1.03);
-            box-shadow: 0 12px 32px 0 rgba(0,0,0,0.28);
+        .card:hover, .card:focus {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 16px 40px 0 rgba(13,202,240,0.18);
             border: 2px solid #0dcaf0;
+            outline: none;
         }
         .card-img-top {
             border-radius: 1.5rem 1.5rem 0 0;
             object-fit: cover;
-            height: 140px;
+            height: 160px;
             background: #222;
+            transition: filter 0.2s;
+            width: 100%;
+        }
+        .card:hover .card-img-top {
+            filter: brightness(1.1) saturate(1.2);
         }
         .card-title {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 600;
             color: #fff;
             margin-bottom: 0.5rem;
         }
         .last-update {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #bdbdbd;
             font-family: 'Tahoma', sans-serif;
             font-weight: bold;
@@ -65,26 +78,65 @@
             background: #181a1b;
             color: #fff;
             text-align: center;
-            padding: 12px 0;
+            padding: 14px 0;
             font-size: 15px;
             letter-spacing: 1px;
             margin-top: 40px;
+            border-radius: 0 0 1.5rem 1.5rem;
+            box-shadow: 0 -2px 16px #0002;
         }
         .theme-toggle {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1051;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px #0002;
         }
-        @media (max-width: 767.98px) {
+        .theme-toggle:focus {
+            outline: 2px solid #0dcaf0;
+        }
+        /* Responsive grid using CSS only */
+        .responsive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        @media (max-width: 991.98px) {
+            .responsive-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 1.2rem;
+            }
             .logo {
-                margin: 10px auto 0 auto;
+                margin: 20px auto 10px auto;
             }
             h1 {
-                font-size: 2em;
+                font-size: 2.1em;
             }
             .card-img-top {
-                height: 110px;
+                height: 120px;
+            }
+        }
+        @media (max-width: 575.98px) {
+            .responsive-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .logo {
+                margin: 10px auto 0 auto;
+                width: 54px;
+            }
+            h1 {
+                font-size: 1.3em;
+                margin-bottom: 20px;
+            }
+            .card-img-top {
+                height: 90px;
+            }
+            .footer {
+                font-size: 13px;
+                padding: 10px 0;
+                margin-top: 25px;
             }
         }
         /* Light theme */
@@ -106,8 +158,29 @@
             background: #e2eafc;
             color: #232526;
         }
-        body.light-theme .card:hover {
+        body.light-theme .card:hover, body.light-theme .card:focus {
             border: 2px solid #0d6efd;
+            box-shadow: 0 16px 40px 0 rgba(13,110,253,0.12);
+        }
+        body.light-theme .theme-toggle {
+            background: #fff;
+            color: #232526;
+        }
+        /* Modal custom */
+        .modal-content {
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 32px #0004;
+        }
+        .modal-body img {
+            background: #222;
+            max-height: 220px;
+            object-fit: cover;
+        }
+        .modal-footer .btn-success {
+            min-width: 120px;
+        }
+        .modal-footer .btn-outline-danger {
+            min-width: 120px;
         }
     </style>
 </head>
@@ -118,135 +191,115 @@
     <div class="container py-4">
         <img src="l.png" alt="Logo" class="logo mx-auto d-block">
         <h1>Bigc Genuis</h1>
-        <div class="row g-4">
+        <div class="responsive-grid">
             <!-- Card 1 -->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100" data-title="Minecraft แจกแอดออน ธนาคาร สามารถกำหนดดอกเบี้ยได้ Roleplay"
-                     data-img="bank.jpg"
-                     data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Bank/Bank.mcaddon"
-                     data-update="26/3/25">
-                    <img src="bank.jpg" class="card-img-top" alt="Download Icon">
-                    <div class="card-body">
-                        <div class="card-title">Minecraft แจกแอดออน ธนาคาร สามารถกำหนดดอกเบี้ยได้ Roleplay</div>
-                        <div class="last-update">Last update 26/3/25</div>
-                    </div>
+            <div class="card h-100" tabindex="0" data-title="Minecraft แจกแอดออน ธนาคาร สามารถกำหนดดอกเบี้ยได้ Roleplay"
+                 data-img="bank.jpg"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Bank/Bank.mcaddon"
+                 data-update="26/3/25">
+                <img src="bank.jpg" class="card-img-top" alt="Download Icon">
+                <div class="card-body">
+                    <div class="card-title">Minecraft แจกแอดออน ธนาคาร สามารถกำหนดดอกเบี้ยได้ Roleplay</div>
+                    <div class="last-update">Last update 26/3/25</div>
                 </div>
             </div>
             <!-- Card 2 -->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100" data-title="Minecraft แจกแอดออน เก็บเศษเหล็ก Roleplay"
-                     data-img="scarp.jpg"
-                     data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Scrap%20Addon/Scrap.mcaddon"
-                     data-update="26/3/25">
-                    <img src="scarp.jpg" class="card-img-top" alt="Download Icon">
-                    <div class="card-body">
-                        <div class="card-title">Minecraft แจกแอดออน เก็บเศษเหล็ก Roleplay</div>
-                        <div class="last-update">Last update 26/3/25</div>
-                    </div>
+            <div class="card h-100" tabindex="0" data-title="Minecraft แจกแอดออน เก็บเศษเหล็ก Roleplay"
+                 data-img="scarp.jpg"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Scrap%20Addon/Scrap.mcaddon"
+                 data-update="26/3/25">
+                <img src="scarp.jpg" class="card-img-top" alt="Download Icon">
+                <div class="card-body">
+                    <div class="card-title">Minecraft แจกแอดออน เก็บเศษเหล็ก Roleplay</div>
+                    <div class="last-update">Last update 26/3/25</div>
                 </div>
             </div>
             <!-- Card 3 -->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100" data-title="Minecraft แจกแอดออน โอนเงิน แบบ Roleplay"
-                     data-img="money.png"
-                     data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Transfer%20money/Transfer%20money.mcaddon"
-                     data-update="26/3/25">
-                    <img src="money.png" class="card-img-top" alt="Download Icon">
-                    <div class="card-body">
-                        <div class="card-title">Minecraft แจกแอดออน โอนเงิน แบบ Roleplay</div>
-                        <div class="last-update">Last update 26/3/25</div>
-                    </div>
+            <div class="card h-100" tabindex="0" data-title="Minecraft แจกแอดออน โอนเงิน แบบ Roleplay"
+                 data-img="money.png"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Transfer%20money/Transfer%20money.mcaddon"
+                 data-update="26/3/25">
+                <img src="money.png" class="card-img-top" alt="Download Icon">
+                <div class="card-body">
+                    <div class="card-title">Minecraft แจกแอดออน โอนเงิน แบบ Roleplay</div>
+                    <div class="last-update">Last update 26/3/25</div>
                 </div>
             </div>
             <!-- Card 4 -->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100" data-title="Minecraft แจกแอดออนหมอ Version 1/2 Roleplay"
-                     data-img="health.png"
-                     data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Medic/Medic.mcaddon"
-                     data-update="26/3/25">
-                    <img src="health.png" class="card-img-top" alt="Download Icon">
-                    <div class="card-body">
-                        <div class="card-title">Minecraft แจกแอดออนหมอ Version 1/2 Roleplay</div>
-                        <div class="last-update">Last update 26/3/25</div>
-                    </div>
+            <div class="card h-100" tabindex="0" data-title="Minecraft แจกแอดออนหมอ Version 1/2 Roleplay"
+                 data-img="health.png"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Medic/Medic.mcaddon"
+                 data-update="26/3/25">
+                <img src="health.png" class="card-img-top" alt="Download Icon">
+                <div class="card-body"></div>
+                    <div class="card-title">Minecraft แจกแอดออนหมอ Version 1/2 Roleplay</div>
+                    <div class="last-update">Last update 26/3/25</div>
                 </div>
             </div>
             <!-- Card 5 -->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100" data-title="Minecraft แจกแอดซื้อขาย กำหนดได้"
-                     data-img="buy.png"
-                     data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Buy%20&%20Sell/Buy%20&%20Sell.mcaddon"
-                     data-update="26/3/25">
-                    <img src="buy.png" class="card-img-top" alt="Download Icon">
-                    <div class="card-body">
-                        <div class="card-title">Minecraft แจกแอดซื้อขาย กำหนดได้</div>
-                        <div class="last-update">Last update 26/3/25</div>
-                    </div>
+            <div class="card h-100" tabindex="0" data-title="Minecraft แจกแอดซื้อขาย กำหนดได้"
+                 data-img="buy.png"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Buy%20&%20Sell/Buy%20&%20Sell.mcaddon"
+                 data-update="26/3/25">
+                <img src="buy.png" class="card-img-top" alt="Download Icon">
+                <div class="card-body">
+                    <div class="card-title">Minecraft แจกแอดซื้อขาย กำหนดได้</div>
+                    <div class="last-update">Last update 26/3/25</div>
                 </div>
             </div>
             <!-- Card 6 -->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100" data-title="Minecraft แจกแอดออน ตำรวจจับโจร Roleplay"
-                     data-img="police.png"
-                     data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Police/Police.mcaddon"
-                     data-update="26/3/25">
-                    <img src="police.png" class="card-img-top" alt="Download Icon">
-                    <div class="card-body">
-                        <div class="card-title">Minecraft แจกแอดออน ตำรวจจับโจร Roleplay</div>
-                        <div class="last-update">Last update 26/3/25</div>
-                    </div>
+            <div class="card h-100" tabindex="0" data-title="Minecraft แจกแอดออน ตำรวจจับโจร Roleplay"
+                 data-img="police.png"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Police/Police.mcaddon"
+                 data-update="26/3/25">
+                <img src="police.png" class="card-img-top" alt="Download Icon">
+                <div class="card-body">
+                    <div class="card-title">Minecraft แจกแอดออน ตำรวจจับโจร Roleplay</div>
+                    <div class="last-update">Last update 26/3/25</div>
                 </div>
             </div>
             <!-- Card 7 -->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100" data-title="Minecraft แจกแอดออน สุ่มของ กำหนดของได้ เวอร์ชั่นล่าสุด!!"
-                     data-img="random.png"
-                     data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Random%20items/Random%20items.mcaddon"
-                     data-update="23/10/24">
-                    <img src="random.png" class="card-img-top" alt="Download Icon">
-                    <div class="card-body">
-                        <div class="card-title">Minecraft แจกแอดออน สุ่มของ กำหนดของได้ เวอร์ชั่นล่าสุด!!</div>
-                        <div class="last-update">Last update 23/10/24</div>
-                    </div>
+            <div class="card h-100" tabindex="0" data-title="Minecraft แจกแอดออน สุ่มของ กำหนดของได้ เวอร์ชั่นล่าสุด!!"
+                 data-img="random.png"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Random%20items/Random%20items.mcaddon"
+                 data-update="23/10/24">
+                <img src="random.png" class="card-img-top" alt="Download Icon">
+                <div class="card-body">
+                    <div class="card-title">Minecraft แจกแอดออน สุ่มของ กำหนดของได้ เวอร์ชั่นล่าสุด!!</div>
+                    <div class="last-update">Last update 23/10/24</div>
                 </div>
             </div>
             <!-- Card 8 -->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100" data-title="Minecraft แจกแอดออนจกปูน Roleplay"
-                     data-img="poon.png"
-                     data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Cement/Cement.mcaddon"
-                     data-update="23/10/24">
-                    <img src="poon.png" class="card-img-top" alt="Download Icon">
-                    <div class="card-body">
-                        <div class="card-title">Minecraft แจกแอดออนจกปูน Roleplay</div>
-                        <div class="last-update">Last update 23/10/24</div>
-                    </div>
+            <div class="card h-100" tabindex="0" data-title="Minecraft แจกแอดออนจกปูน Roleplay"
+                 data-img="poon.png"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Cement/Cement.mcaddon"
+                 data-update="23/10/24">
+                <img src="poon.png" class="card-img-top" alt="Download Icon">
+                <div class="card-body">
+                    <div class="card-title">Minecraft แจกแอดออนจกปูน Roleplay</div>
+                    <div class="last-update">Last update 23/10/24</div>
                 </div>
             </div>
             <!-- Card 9 -->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100" data-title="Minecraft แจกแอดออน เกี่ยวกับยานพาหนะ Roleplay"
-                     data-img="vehicle.png"
-                     data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Vehicle%20System/Vehicle%20System.mcpack"
-                     data-update="26/3/25">
-                    <img src="vehicle.png" class="card-img-top" alt="Download Icon">
-                    <div class="card-body">
-                        <div class="card-title">Minecraft แจกแอดออน เกี่ยวกับยานพาหนะ Roleplay</div>
-                        <div class="last-update">Last update 26/3/25</div>
-                    </div>
+            <div class="card h-100" tabindex="0" data-title="Minecraft แจกแอดออน เกี่ยวกับยานพาหนะ Roleplay"
+                 data-img="vehicle.png"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Vehicle%20System/Vehicle%20System.mcpack"
+                 data-update="26/3/25">
+                <img src="vehicle.png" class="card-img-top" alt="Download Icon">
+                <div class="card-body">
+                    <div class="card-title">Minecraft แจกแอดออน เกี่ยวกับยานพาหนะ Roleplay</div>
+                    <div class="last-update">Last update 26/3/25</div>
                 </div>
             </div>
             <!-- Card 10 -->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100" data-title="Minecraft Addon RealTime Sync"
-                     data-img="realtime.png"
-                     data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/RealTime%20Sync/RealTimeSync.mcpack"
-                     data-update="26/3/25">
-                    <img src="realtime.png" class="card-img-top" alt="Download Icon">
-                    <div class="card-body">
-                        <div class="card-title">Minecraft Addon RealTime Sync</div>
-                        <div class="last-update">Last update 26/3/25</div>
-                    </div>
+            <div class="card h-100" tabindex="0" data-title="Minecraft Addon RealTime Sync"
+                 data-img="realtime.png"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/RealTime%20Sync/RealTimeSync.mcpack"
+                 data-update="26/3/25">
+                <img src="realtime.png" class="card-img-top" alt="Download Icon">
+                <div class="card-body">
+                    <div class="card-title">Minecraft Addon RealTime Sync</div>
+                    <div class="last-update">Last update 26/3/25</div>
                 </div>
             </div>
         </div>
@@ -260,7 +313,7 @@
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body text-center">
-            <div class="row" id="modalImages"></div>
+            <img id="modalImage" src="" alt="" class="img-fluid rounded shadow-sm border mb-3" style="background:#222;max-height:220px;object-fit:cover">
             <div class="mt-3">
                 <span class="badge bg-info" id="modalUpdate"></span>
             </div>
@@ -275,8 +328,7 @@
     <div class="footer mt-5">
         <p class="mb-0">Copyright © 2024-2025 Bigc Genuis. All rights reserved.</p>
     </div>
-    <!-- Bootstrap JS & Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Modal logic
@@ -286,17 +338,19 @@
                 const img = this.getAttribute('data-img');
                 const link = this.getAttribute('data-link');
                 const update = this.getAttribute('data-update');
-                // Show all images in the grid
-                const allImgs = Array.from(document.querySelectorAll('.card-img-top')).map(i => i.getAttribute('src'));
-                let imagesHtml = '';
-                allImgs.forEach(src => {
-                    imagesHtml += `<div class="col-6 col-md-4 mb-3"><img src="${src}" class="img-fluid rounded shadow-sm border" style="background:#222;max-height:120px;object-fit:cover"></div>`;
-                });
-                document.getElementById('modalImages').innerHTML = imagesHtml;
+                document.getElementById('modalImage').src = img;
+                document.getElementById('modalImage').alt = title;
                 document.getElementById('downloadModalLabel').textContent = title;
                 document.getElementById('downloadBtn').href = link;
                 document.getElementById('modalUpdate').textContent = 'อัปเดตล่าสุด: ' + update;
                 new bootstrap.Modal(document.getElementById('downloadModal')).show();
+            });
+            // Keyboard accessibility
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
             });
         });
 
