@@ -1,364 +1,430 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bigc Genuis - Minecraft Addons</title>
+    <link rel="icon" type="image/png" href="l.png">
+    <title>Bigc Genuis</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P:wght@400&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        'pixel': ['"Press Start 2P"', 'monospace'],
-                        'minecraft': ['Orbitron', 'sans-serif']
-                    },
-                    colors: {
-                        'minecraft': {
-                            'grass': '#7CB342',
-                            'dirt': '#8D6E63',
-                            'stone': '#616161',
-                            'diamond': '#00BCD4',
-                            'gold': '#FFC107',
-                            'redstone': '#F44336',
-                            'emerald': '#4CAF50',
-                            'obsidian': '#212121',
-                            'wood': '#795548'
-                        }
-                    },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
                         'glow': 'glow 2s ease-in-out infinite alternate',
-                        'bounce-slow': 'bounce 3s infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'wiggle': 'wiggle 1s ease-in-out infinite',
                         'slide-up': 'slideUp 0.5s ease-out',
-                        'pixel-dance': 'pixelDance 2s ease-in-out infinite'
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'bounce-gentle': 'bounceGentle 2s ease-in-out infinite',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-20px)' }
+                            '50%': { transform: 'translateY(-10px)' }
                         },
                         glow: {
-                            '0%': { boxShadow: '0 0 20px rgba(124, 179, 66, 0.5)' },
-                            '100%': { boxShadow: '0 0 40px rgba(124, 179, 66, 0.8)' }
-                        },
-                        wiggle: {
-                            '0%, 100%': { transform: 'rotate(-3deg)' },
-                            '50%': { transform: 'rotate(3deg)' }
+                            '0%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.3)' },
+                            '100%': { boxShadow: '0 0 40px rgba(139, 92, 246, 0.6)' }
                         },
                         slideUp: {
-                            '0%': { transform: 'translateY(100px)', opacity: '0' },
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
                             '100%': { transform: 'translateY(0)', opacity: '1' }
                         },
-                        pixelDance: {
-                            '0%, 100%': { transform: 'scale(1) rotate(0deg)' },
-                            '25%': { transform: 'scale(1.05) rotate(1deg)' },
-                            '50%': { transform: 'scale(1.1) rotate(0deg)' },
-                            '75%': { transform: 'scale(1.05) rotate(-1deg)' }
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        bounceGentle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' }
                         }
                     },
-                    boxShadow: {
-                        'minecraft': '8px 8px 0px rgba(0, 0, 0, 0.3)',
-                        'minecraft-hover': '12px 12px 0px rgba(0, 0, 0, 0.4)',
-                        'glow-green': '0 0 30px rgba(124, 179, 66, 0.6)',
-                        'glow-diamond': '0 0 30px rgba(0, 188, 212, 0.6)'
+                    backdropBlur: {
+                        'xs': '2px',
                     }
                 }
             }
         }
     </script>
     <style>
-        .minecraft-bg {
-            background: linear-gradient(45deg, #2E7D32 25%, transparent 25%), 
-                        linear-gradient(-45deg, #2E7D32 25%, transparent 25%), 
-                        linear-gradient(45deg, transparent 75%, #2E7D32 75%), 
-                        linear-gradient(-45deg, transparent 75%, #2E7D32 75%);
-            background-size: 20px 20px;
-            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
         }
         
-        .pixelated {
-            image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
         }
         
-        .card-hover:hover {
-            transform: translateY(-8px) scale(1.02);
+        ::-webkit-scrollbar-thumb {
+            background: rgba(139, 92, 246, 0.5);
+            border-radius: 10px;
         }
         
-        .text-shadow-minecraft {
-            text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 92, 246, 0.7);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .animated-bg {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatParticle 20s linear infinite;
+        }
+        
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-minecraft-grass via-minecraft-emerald to-minecraft-dirt minecraft-bg overflow-x-hidden">
-    
-    <!-- Animated Background Elements -->
-    <div class="fixed inset-0 pointer-events-none overflow-hidden">
-        <div class="absolute top-10 left-10 w-8 h-8 bg-minecraft-diamond opacity-20 animate-float"></div>
-        <div class="absolute top-32 right-20 w-6 h-6 bg-minecraft-gold opacity-30 animate-bounce-slow"></div>
-        <div class="absolute bottom-20 left-1/4 w-10 h-10 bg-minecraft-redstone opacity-25 animate-pulse-slow"></div>
-        <div class="absolute top-1/2 right-10 w-4 h-4 bg-minecraft-emerald opacity-40 animate-wiggle"></div>
-        <div class="absolute bottom-32 right-1/3 w-12 h-12 bg-minecraft-stone opacity-15 animate-float" style="animation-delay: 2s;"></div>
+
+<body class="min-h-screen animated-bg text-white overflow-x-hidden relative">
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="particle w-2 h-2" style="left: 10%; animation-delay: 0s; animation-duration: 25s;"></div>
+        <div class="particle w-1 h-1" style="left: 20%; animation-delay: 5s; animation-duration: 20s;"></div>
+        <div class="particle w-3 h-3" style="left: 30%; animation-delay: 10s; animation-duration: 30s;"></div>
+        <div class="particle w-1 h-1" style="left: 40%; animation-delay: 15s; animation-duration: 22s;"></div>
+        <div class="particle w-2 h-2" style="left: 50%; animation-delay: 20s; animation-duration: 28s;"></div>
+        <div class="particle w-1 h-1" style="left: 60%; animation-delay: 8s; animation-duration: 26s;"></div>
+        <div class="particle w-2 h-2" style="left: 70%; animation-delay: 12s; animation-duration: 24s;"></div>
+        <div class="particle w-1 h-1" style="left: 80%; animation-delay: 18s; animation-duration: 32s;"></div>
+        <div class="particle w-3 h-3" style="left: 90%; animation-delay: 3s; animation-duration: 27s;"></div>
     </div>
 
-    <!-- Theme Toggle Button -->
-    <button id="themeToggle" class="fixed top-6 right-6 z-50 w-14 h-14 bg-minecraft-obsidian hover:bg-minecraft-stone text-minecraft-gold border-4 border-minecraft-gold hover:border-minecraft-diamond transition-all duration-300 shadow-minecraft hover:shadow-minecraft-hover animate-glow font-pixel text-xs">
-        🌙
+    <button id="themeToggle" 
+            class="fixed top-6 right-6 z-50 glass rounded-full p-3 hover:scale-110 transition-all duration-300 hover:animate-glow group"
+            title="เปลี่ยนธีม">
+        <i id="themeIcon" class="bi bi-moon-fill text-xl group-hover:rotate-12 transition-transform duration-300"></i>
     </button>
 
-    <!-- Main Container -->
     <div class="container mx-auto px-4 py-8 relative z-10">
-        
-        <!-- Header -->
-        <header class="text-center mb-12 animate-slide-up">
-            <div class="inline-block mb-6 animate-pixel-dance">
-                <div class="w-24 h-24 bg-minecraft-grass border-8 border-minecraft-wood shadow-minecraft hover:shadow-glow-green transition-all duration-300 flex items-center justify-center text-4xl pixelated">
-                    🎮
-                </div>
+        <div class="text-center mb-12 animate-fade-in">
+            <div class="inline-block animate-bounce-gentle">
+                <img src="l.png" alt="Logo" class="w-20 h-20 mx-auto mb-4 rounded-full glass p-2 hover:scale-110 transition-transform duration-300">
             </div>
-            <h1 class="font-pixel text-4xl md:text-6xl text-white text-shadow-minecraft mb-4 animate-glow">
+            <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-slide-up">
                 Bigc Genuis
             </h1>
-            <p class="font-minecraft text-xl text-minecraft-gold text-shadow-minecraft animate-pulse-slow">
-                🎯 Minecraft Addons Collection 🎯
+            <p class="text-lg text-gray-300 mt-2 animate-slide-up" style="animation-delay: 0.2s;">
+                Minecraft Addons Collection
             </p>
-        </header>
-
-        <!-- Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            
-            <!-- Bank Addon Card -->
-            <div class="card-hover bg-minecraft-wood border-8 border-minecraft-obsidian shadow-minecraft hover:shadow-minecraft-hover transition-all duration-500 animate-slide-up group cursor-pointer" style="animation-delay: 0.1s;">
-                <div class="relative overflow-hidden">
-                    <div class="h-48 bg-gradient-to-br from-minecraft-gold to-minecraft-dirt flex items-center justify-center text-6xl pixelated group-hover:scale-110 transition-transform duration-300">
-                        🏦
-                    </div>
-                    <div class="absolute top-2 right-2">
-                        <span class="bg-minecraft-redstone text-white px-3 py-1 font-pixel text-xs border-2 border-minecraft-obsidian animate-pulse">
-                            BETA
-                        </span>
-                    </div>
-                </div>
-                <div class="p-6 bg-minecraft-stone">
-                    <h3 class="font-minecraft font-bold text-lg text-white mb-3 group-hover:text-minecraft-gold transition-colors duration-300">
-                        ธนาคาร Roleplay
-                    </h3>
-                    <p class="font-minecraft text-sm text-gray-300 mb-4">
-                        แอดออนธนาคาร สามารถกำหนดดอกเบี้ยได้
-                    </p>
-                    <div class="flex justify-between items-center">
-                        <span class="font-pixel text-xs text-minecraft-emerald">
-                            22/6/2568
-                        </span>
-                        <button class="bg-minecraft-emerald hover:bg-minecraft-grass text-white px-4 py-2 font-pixel text-xs border-4 border-minecraft-obsidian shadow-minecraft hover:shadow-glow-green transition-all duration-300 transform hover:scale-105">
-                            DOWNLOAD
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scrap Addon Card -->
-            <div class="card-hover bg-minecraft-wood border-8 border-minecraft-obsidian shadow-minecraft hover:shadow-minecraft-hover transition-all duration-500 animate-slide-up group cursor-pointer" style="animation-delay: 0.2s;">
-                <div class="relative overflow-hidden">
-                    <div class="h-48 bg-gradient-to-br from-minecraft-stone to-minecraft-obsidian flex items-center justify-center text-6xl pixelated group-hover:scale-110 transition-transform duration-300">
-                        ⚙️
-                    </div>
-                    <div class="absolute top-2 right-2">
-                        <span class="bg-minecraft-emerald text-white px-3 py-1 font-pixel text-xs border-2 border-minecraft-obsidian animate-glow">
-                            STABLE
-                        </span>
-                    </div>
-                </div>
-                <div class="p-6 bg-minecraft-stone">
-                    <h3 class="font-minecraft font-bold text-lg text-white mb-3 group-hover:text-minecraft-gold transition-colors duration-300">
-                        เก็บเศษเหล็ก Roleplay
-                    </h3>
-                    <p class="font-minecraft text-sm text-gray-300 mb-4">
-                        แอดออนเก็บเศษเหล็กสำหรับ Roleplay
-                    </p>
-                    <div class="flex justify-between items-center">
-                        <span class="font-pixel text-xs text-minecraft-emerald">
-                            26/3/2568
-                        </span>
-                        <button class="bg-minecraft-emerald hover:bg-minecraft-grass text-white px-4 py-2 font-pixel text-xs border-4 border-minecraft-obsidian shadow-minecraft hover:shadow-glow-green transition-all duration-300 transform hover:scale-105">
-                            DOWNLOAD
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Money Transfer Card -->
-            <div class="card-hover bg-minecraft-wood border-8 border-minecraft-obsidian shadow-minecraft hover:shadow-minecraft-hover transition-all duration-500 animate-slide-up group cursor-pointer" style="animation-delay: 0.3s;">
-                <div class="relative overflow-hidden">
-                    <div class="h-48 bg-gradient-to-br from-minecraft-gold to-minecraft-emerald flex items-center justify-center text-6xl pixelated group-hover:scale-110 transition-transform duration-300">
-                        💰
-                    </div>
-                    <div class="absolute top-2 right-2">
-                        <span class="bg-minecraft-emerald text-white px-3 py-1 font-pixel text-xs border-2 border-minecraft-obsidian animate-glow">
-                            STABLE
-                        </span>
-                    </div>
-                </div>
-                <div class="p-6 bg-minecraft-stone">
-                    <h3 class="font-minecraft font-bold text-lg text-white mb-3 group-hover:text-minecraft-gold transition-colors duration-300">
-                        โอนเงิน Roleplay
-                    </h3>
-                    <p class="font-minecraft text-sm text-gray-300 mb-4">
-                        แอดออนโอนเงินแบบ Roleplay
-                    </p>
-                    <div class="flex justify-between items-center">
-                        <span class="font-pixel text-xs text-minecraft-emerald">
-                            26/3/2568
-                        </span>
-                        <button class="bg-minecraft-emerald hover:bg-minecraft-grass text-white px-4 py-2 font-pixel text-xs border-4 border-minecraft-obsidian shadow-minecraft hover:shadow-glow-green transition-all duration-300 transform hover:scale-105">
-                            DOWNLOAD
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Medic Addon Card -->
-            <div class="card-hover bg-minecraft-wood border-8 border-minecraft-obsidian shadow-minecraft hover:shadow-minecraft-hover transition-all duration-500 animate-slide-up group cursor-pointer" style="animation-delay: 0.4s;">
-                <div class="relative overflow-hidden">
-                    <div class="h-48 bg-gradient-to-br from-minecraft-redstone to-white flex items-center justify-center text-6xl pixelated group-hover:scale-110 transition-transform duration-300">
-                        🏥
-                    </div>
-                    <div class="absolute top-2 right-2">
-                        <span class="bg-minecraft-redstone text-white px-3 py-1 font-pixel text-xs border-2 border-minecraft-obsidian animate-pulse">
-                            BETA
-                        </span>
-                    </div>
-                </div>
-                <div class="p-6 bg-minecraft-stone">
-                    <h3 class="font-minecraft font-bold text-lg text-white mb-3 group-hover:text-minecraft-gold transition-colors duration-300">
-                        หมอ Version 1/2
-                    </h3>
-                    <p class="font-minecraft text-sm text-gray-300 mb-4">
-                        แอดออนหมอสำหรับ Roleplay
-                    </p>
-                    <div class="flex justify-between items-center">
-                        <span class="font-pixel text-xs text-minecraft-emerald">
-                            22/6/2568
-                        </span>
-                        <button class="bg-minecraft-emerald hover:bg-minecraft-grass text-white px-4 py-2 font-pixel text-xs border-4 border-minecraft-obsidian shadow-minecraft hover:shadow-glow-green transition-all duration-300 transform hover:scale-105">
-                            DOWNLOAD
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Buy & Sell Card -->
-            <div class="card-hover bg-minecraft-wood border-8 border-minecraft-obsidian shadow-minecraft hover:shadow-minecraft-hover transition-all duration-500 animate-slide-up group cursor-pointer" style="animation-delay: 0.5s;">
-                <div class="relative overflow-hidden">
-                    <div class="h-48 bg-gradient-to-br from-minecraft-diamond to-minecraft-emerald flex items-center justify-center text-6xl pixelated group-hover:scale-110 transition-transform duration-300">
-                        🛒
-                    </div>
-                    <div class="absolute top-2 right-2">
-                        <span class="bg-minecraft-emerald text-white px-3 py-1 font-pixel text-xs border-2 border-minecraft-obsidian animate-glow">
-                            STABLE
-                        </span>
-                    </div>
-                </div>
-                <div class="p-6 bg-minecraft-stone">
-                    <h3 class="font-minecraft font-bold text-lg text-white mb-3 group-hover:text-minecraft-gold transition-colors duration-300">
-                        ซื้อขาย กำหนดได้
-                    </h3>
-                    <p class="font-minecraft text-sm text-gray-300 mb-4">
-                        แอดออนซื้อขายที่กำหนดได้
-                    </p>
-                    <div class="flex justify-between items-center">
-                        <span class="font-pixel text-xs text-minecraft-emerald">
-                            26/3/2568
-                        </span>
-                        <button class="bg-minecraft-emerald hover:bg-minecraft-grass text-white px-4 py-2 font-pixel text-xs border-4 border-minecraft-obsidian shadow-minecraft hover:shadow-glow-green transition-all duration-300 transform hover:scale-105">
-                            DOWNLOAD
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Police Addon Card -->
-            <div class="card-hover bg-minecraft-wood border-8 border-minecraft-obsidian shadow-minecraft hover:shadow-minecraft-hover transition-all duration-500 animate-slide-up group cursor-pointer" style="animation-delay: 0.6s;">
-                <div class="relative overflow-hidden">
-                    <div class="h-48 bg-gradient-to-br from-blue-600 to-minecraft-obsidian flex items-center justify-center text-6xl pixelated group-hover:scale-110 transition-transform duration-300">
-                        👮
-                    </div>
-                    <div class="absolute top-2 right-2">
-                        <span class="bg-minecraft-emerald text-white px-3 py-1 font-pixel text-xs border-2 border-minecraft-obsidian animate-glow">
-                            STABLE
-                        </span>
-                    </div>
-                </div>
-                <div class="p-6 bg-minecraft-stone">
-                    <h3 class="font-minecraft font-bold text-lg text-white mb-3 group-hover:text-minecraft-gold transition-colors duration-300">
-                        ตำรวจจับโจร
-                    </h3>
-                    <p class="font-minecraft text-sm text-gray-300 mb-4">
-                        แอดออนตำรวจจับโจร Roleplay
-                    </p>
-                    <div class="flex justify-between items-center">
-                        <span class="font-pixel text-xs text-minecraft-emerald">
-                            26/3/2568
-                        </span>
-                        <button class="bg-minecraft-emerald hover:bg-minecraft-grass text-white px-4 py-2 font-pixel text-xs border-4 border-minecraft-obsidian shadow-minecraft hover:shadow-glow-green transition-all duration-300 transform hover:scale-105">
-                            DOWNLOAD
-                        </button>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
-        <!-- Footer -->
-        <footer class="text-center mt-16 animate-slide-up" style="animation-delay: 0.8s;">
-            <div class="inline-block bg-minecraft-obsidian border-4 border-minecraft-gold px-8 py-4 shadow-minecraft">
-                <p class="font-pixel text-minecraft-gold text-sm animate-glow">
-                    🎮 Made with ❤️ for Minecraft Community 🎮
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <div class="addon-card glass rounded-2xl overflow-hidden hover:scale-105 transition-all duration-500 cursor-pointer group animate-slide-up hover:animate-glow"
+                 tabindex="0" 
+                 data-title="Minecraft แจกแอดออน ธนาคาร สามารถกำหนดดอกเบี้ยได้ Roleplay"
+                 data-img="bank.jpg"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Bank/Bank-0.0.2.mcaddon"
+                 data-update="22/6/2568 @beta"
+                 style="animation-delay: 0.1s;">
+                <div class="relative overflow-hidden">
+                    <img src="bank.jpg" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700" alt="Bank Addon">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-3 group-hover:text-purple-300 transition-colors duration-300">
+                        Minecraft แจกแอดออน ธนาคาร สามารถกำหนดดอกเบี้ยได้ Roleplay
+                    </h3>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400">อัปเดตล่าสุด: 22/6/2568</span>
+                        <span class="px-3 py-1 bg-gradient-to-r from-orange-400 to-red-500 text-white text-xs font-medium rounded-full animate-float">
+                            @beta
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="addon-card glass rounded-2xl overflow-hidden hover:scale-105 transition-all duration-500 cursor-pointer group animate-slide-up hover:animate-glow"
+                 tabindex="0"
+                 data-title="Minecraft แจกแอดออน เก็บเศษเหล็ก Roleplay"
+                 data-img="scarp.jpg"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Scrap%20Addon/Scrap.mcaddon"
+                 data-update="26/3/2568 @stable"
+                 style="animation-delay: 0.2s;">
+                <div class="relative overflow-hidden">
+                    <img src="scarp.jpg" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700" alt="Scrap Addon">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-3 group-hover:text-purple-300 transition-colors duration-300">
+                        Minecraft แจกแอดออน เก็บเศษเหล็ก Roleplay
+                    </h3>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400">อัปเดตล่าสุด: 26/3/2568</span>
+                        <span class="px-3 py-1 bg-gradient-to-r from-green-400 to-blue-500 text-white text-xs font-medium rounded-full animate-float">
+                            @stable
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="addon-card glass rounded-2xl overflow-hidden hover:scale-105 transition-all duration-500 cursor-pointer group animate-slide-up hover:animate-glow"
+                 tabindex="0"
+                 data-title="Minecraft แจกแอดออน โอนเงิน แบบ Roleplay"
+                 data-img="money.png"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Transfer%20money/Transfer%20money.mcaddon"
+                 data-update="26/3/2568 @stable"
+                 style="animation-delay: 0.3s;">
+                <div class="relative overflow-hidden">
+                    <img src="money.png" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700" alt="Money Transfer Addon">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-3 group-hover:text-purple-300 transition-colors duration-300">
+                        Minecraft แจกแอดออน โอนเงิน แบบ Roleplay
+                    </h3>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400">อัปเดตล่าสุด: 26/3/2568</span>
+                        <span class="px-3 py-1 bg-gradient-to-r from-green-400 to-blue-500 text-white text-xs font-medium rounded-full animate-float">
+                            @stable
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="addon-card glass rounded-2xl overflow-hidden hover:scale-105 transition-all duration-500 cursor-pointer group animate-slide-up hover:animate-glow"
+                 tabindex="0"
+                 data-title="Minecraft แจกแอดออนหมอ Version 1/2 Roleplay"
+                 data-img="health.png"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Medic/Medic.mcaddon"
+                 data-update="22/6/2568 @beta"
+                 style="animation-delay: 0.4s;">
+                <div class="relative overflow-hidden">
+                    <img src="health.png" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700" alt="Medic Addon">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-3 group-hover:text-purple-300 transition-colors duration-300">
+                        Minecraft แจกแอดออนหมอ Version 1/2 Roleplay
+                    </h3>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400">อัปเดตล่าสุด: 22/6/2568</span>
+                        <span class="px-3 py-1 bg-gradient-to-r from-orange-400 to-red-500 text-white text-xs font-medium rounded-full animate-float">
+                            @beta
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="addon-card glass rounded-2xl overflow-hidden hover:scale-105 transition-all duration-500 cursor-pointer group animate-slide-up hover:animate-glow"
+                 tabindex="0"
+                 data-title="Minecraft แจกแอดซื้อขาย กำหนดได้"
+                 data-img="buy.png"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Buy%20&%20Sell/Buy%20&%20Sell.mcaddon"
+                 data-update="26/3/2568 @stable"
+                 style="animation-delay: 0.5s;">
+                <div class="relative overflow-hidden">
+                    <img src="buy.png" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700" alt="Buy & Sell Addon">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-3 group-hover:text-purple-300 transition-colors duration-300">
+                        Minecraft แจกแอดซื้อขาย กำหนดได้
+                    </h3>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400">อัปเดตล่าสุด: 26/3/2568</span>
+                        <span class="px-3 py-1 bg-gradient-to-r from-green-400 to-blue-500 text-white text-xs font-medium rounded-full animate-float">
+                            @stable
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="addon-card glass rounded-2xl overflow-hidden hover:scale-105 transition-all duration-500 cursor-pointer group animate-slide-up hover:animate-glow"
+                 tabindex="0"
+                 data-title="Minecraft แจกแอดออน ตำรวจจับโจร Roleplay"
+                 data-img="police.png"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Police/Police.mcaddon"
+                 data-update="26/3/2568"
+                 style="animation-delay: 0.6s;">
+                <div class="relative overflow-hidden">
+                    <img src="police.png" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700" alt="Police Addon">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-3 group-hover:text-purple-300 transition-colors duration-300">
+                        Minecraft แจกแอดออน ตำรวจจับโจร Roleplay
+                    </h3>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400">อัปเดตล่าสุด: 26/3/2568</span>
+                        <span class="px-3 py-1 bg-gradient-to-r from-green-400 to-blue-500 text-white text-xs font-medium rounded-full animate-float">
+                            @stable
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="addon-card glass rounded-2xl overflow-hidden hover:scale-105 transition-all duration-500 cursor-pointer group animate-slide-up hover:animate-glow"
+                 tabindex="0"
+                 data-title="Minecraft แจกแอดออน สุ่มของ กำหนดของได้ เวอร์ชั่นล่าสุด!!"
+                 data-img="random.png"
+                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Random%20items/Random%20items.mcaddon"
+                 data-update="23/10/2567"
+                 style="animation-delay: 0.7s;">
+                <div class="relative overflow-hidden">
+                    <img src="random.png" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700" alt="Random Items Addon">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-3 group-hover:text-purple-300 transition-colors duration-300">
+                        Minecraft แจกแอดออน สุ่มของ กำหนดของได้ เวอร์ชั่นล่าสุด!!
+                    </h3>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400">อัปเดตล่าสุด: 23/10/2567</span>
+                        <span class="px-3 py-1 bg-gradient-to-r from-green-400 to-blue-500 text-white text-xs font-medium rounded-full animate-float">
+                            @stable
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-16 animate-fade-in">
+            <div class="glass rounded-2xl p-8 max-w-2xl mx-auto">
+                <h2 class="text-2xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    เกี่ยวกับเรา
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    เราเป็นทีมพัฒนาแอดออน Minecraft ที่มุ่งเน้นการสร้างประสบการณ์ Roleplay ที่น่าสนใจ 
+                    พร้อมด้วยฟีเจอร์ที่หลากหลายและใช้งานง่าย เพื่อให้ผู้เล่นได้สนุกกับเกมมากยิ่งขึ้น
                 </p>
             </div>
-        </footer>
+        </div>
+    </div>
 
+    <div id="addonModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 invisible transition-all duration-300">
+        <div class="glass rounded-3xl p-8 max-w-2xl mx-4 transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-start mb-6">
+                <h2 id="modalTitle" class="text-2xl font-bold text-white"></h2>
+                <button id="closeModal" class="text-gray-400 hover:text-white text-2xl transition-colors duration-200">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="mb-6">
+                <img id="modalImage" src="/placeholder.svg" alt="" class="w-full h-64 object-cover rounded-2xl">
+            </div>
+            <div class="flex items-center justify-between mb-6">
+                <span id="modalUpdate" class="text-gray-300"></span>
+                <span id="modalVersion" class="px-4 py-2 rounded-full text-sm font-medium"></span>
+            </div>
+            <div class="flex gap-4">
+                <button id="downloadBtn" class="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                    <i class="bi bi-download mr-2"></i>
+                    ดาวน์โหลด
+                </button>
+                <button id="closeModal2" class="px-6 py-3 glass rounded-xl hover:bg-white/20 transition-all duration-300">
+                    ปิด
+                </button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Theme toggle functionality
         const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
         let isDark = true;
 
         themeToggle.addEventListener('click', () => {
             isDark = !isDark;
             if (isDark) {
-                document.body.className = document.body.className.replace('from-blue-900 via-purple-900 to-indigo-900', 'from-minecraft-grass via-minecraft-emerald to-minecraft-dirt');
-                themeToggle.textContent = '🌙';
+                themeIcon.className = 'bi bi-moon-fill text-xl group-hover:rotate-12 transition-transform duration-300';
+                document.body.className = 'min-h-screen animated-bg text-white overflow-x-hidden relative';
             } else {
-                document.body.className = document.body.className.replace('from-minecraft-grass via-minecraft-emerald to-minecraft-dirt', 'from-blue-900 via-purple-900 to-indigo-900');
-                themeToggle.textContent = '☀️';
+                themeIcon.className = 'bi bi-sun-fill text-xl group-hover:rotate-12 transition-transform duration-300';
+                document.body.className = 'min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 text-gray-800 overflow-x-hidden relative';
             }
         });
 
-        // Add click handlers for download buttons
-        document.querySelectorAll('button:contains("DOWNLOAD")').forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                // Add download logic here
-                button.textContent = 'DOWNLOADING...';
-                setTimeout(() => {
-                    button.textContent = 'DOWNLOAD';
-                }, 2000);
+        const modal = document.getElementById('addonModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalImage = document.getElementById('modalImage');
+        const modalUpdate = document.getElementById('modalUpdate');
+        const modalVersion = document.getElementById('modalVersion');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const closeModal = document.getElementById('closeModal');
+        const closeModal2 = document.getElementById('closeModal2');
+        document.querySelectorAll('.addon-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const title = card.dataset.title;
+                const img = card.dataset.img;
+                const link = card.dataset.link;
+                const update = card.dataset.update;
+                
+                modalTitle.textContent = title;
+                modalImage.src = img;
+                modalImage.alt = title;
+                modalUpdate.textContent = `อัปเดตล่าสุด: ${update.split(' @')[0]}`;
+                if (update.includes('@beta')) {
+                    modalVersion.textContent = '@beta';
+                    modalVersion.className = 'px-4 py-2 bg-gradient-to-r from-orange-400 to-red-500 text-white text-sm font-medium rounded-full';
+                } else {
+                    modalVersion.textContent = '@stable';
+                    modalVersion.className = 'px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white text-sm font-medium rounded-full';
+                }
+                
+                downloadBtn.onclick = () => window.open(link, '_blank');
+                modal.classList.remove('opacity-0', 'invisible');
+                modal.querySelector('.glass').classList.remove('scale-95');
+                modal.querySelector('.glass').classList.add('scale-100');
             });
         });
-
-        // Add floating animation to background elements
-        const floatingElements = document.querySelectorAll('.animate-float');
-        floatingElements.forEach((element, index) => {
-            element.style.animationDelay = `${index * 0.5}s`;
+        [closeModal, closeModal2].forEach(btn => {
+            btn.addEventListener('click', () => {
+                modal.classList.add('opacity-0', 'invisible');
+                modal.querySelector('.glass').classList.add('scale-95');
+                modal.querySelector('.glass').classList.remove('scale-100');
+            });
+        });
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('opacity-0', 'invisible');
+                modal.querySelector('.glass').classList.add('scale-95');
+                modal.querySelector('.glass').classList.remove('scale-100');
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('invisible')) {
+                modal.classList.add('opacity-0', 'invisible');
+                modal.querySelector('.glass').classList.add('scale-95');
+                modal.querySelector('.glass').classList.remove('scale-100');
+            }
         });
     </script>
-
 </body>
 </html>
