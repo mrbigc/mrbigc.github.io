@@ -1,786 +1,364 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="l.png">
-    <title>Bigc Genuis</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Bigc Genuis - Minecraft Addons</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P:wght@400&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'pixel': ['"Press Start 2P"', 'monospace'],
+                        'minecraft': ['Orbitron', 'sans-serif']
+                    },
+                    colors: {
+                        'minecraft': {
+                            'grass': '#7CB342',
+                            'dirt': '#8D6E63',
+                            'stone': '#616161',
+                            'diamond': '#00BCD4',
+                            'gold': '#FFC107',
+                            'redstone': '#F44336',
+                            'emerald': '#4CAF50',
+                            'obsidian': '#212121',
+                            'wood': '#795548'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'pixel-dance': 'pixelDance 2s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 20px rgba(124, 179, 66, 0.5)' },
+                            '100%': { boxShadow: '0 0 40px rgba(124, 179, 66, 0.8)' }
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(100px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pixelDance: {
+                            '0%, 100%': { transform: 'scale(1) rotate(0deg)' },
+                            '25%': { transform: 'scale(1.05) rotate(1deg)' },
+                            '50%': { transform: 'scale(1.1) rotate(0deg)' },
+                            '75%': { transform: 'scale(1.05) rotate(-1deg)' }
+                        }
+                    },
+                    boxShadow: {
+                        'minecraft': '8px 8px 0px rgba(0, 0, 0, 0.3)',
+                        'minecraft-hover': '12px 12px 0px rgba(0, 0, 0, 0.4)',
+                        'glow-green': '0 0 30px rgba(124, 179, 66, 0.6)',
+                        'glow-diamond': '0 0 30px rgba(0, 188, 212, 0.6)'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --dark-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            --light-bg: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            --card-shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.2);
-            --border-radius: 20px;
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        .minecraft-bg {
+            background: linear-gradient(45deg, #2E7D32 25%, transparent 25%), 
+                        linear-gradient(-45deg, #2E7D32 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #2E7D32 75%), 
+                        linear-gradient(-45deg, transparent 75%, #2E7D32 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
         }
-
-        * {
-            transition: var(--transition);
+        
+        .pixelated {
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
         }
-
-        body {
-            min-height: 100vh;
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-            background: var(--dark-bg);
-            color: #ffffff;
-            overflow-x: hidden;
-            position: relative;
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
         }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
-            animation: float 20s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.6; }
-        }
-
-        /* Theme Toggle */
-        .theme-toggle {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            z-index: 1050;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            color: white;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            transition: var(--transition);
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.1) rotate(10deg);
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Logo */
-        .logo {
-            width: 80px;
-            height: auto;
-            margin: 2rem 0 1rem 0;
-            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.3));
-            animation: logoFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Main Title */
-        .main-title {
-            font-size: clamp(2rem, 5vw, 4rem);
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 3rem;
-            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradient 3s ease infinite;
-            letter-spacing: -0.02em;
-            text-shadow: none;
-        }
-
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Card Grid */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            padding: 0 1rem;
-        }
-
-        /* Cards */
-        .addon-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .addon-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1));
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .addon-card:hover::before {
-            opacity: 1;
-        }
-
-        .addon-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .card-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: var(--transition);
-            background: linear-gradient(45deg, #667eea, #764ba2);
-        }
-
-        .addon-card:hover .card-image {
-            transform: scale(1.1);
-            filter: brightness(1.1) saturate(1.2);
-        }
-
-        .card-content {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #ffffff;
-            line-height: 1.4;
-        }
-
-        .card-update {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: auto;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        /* Version Badges */
-        .version-badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-left: 0.5rem;
-            transition: var(--transition);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .version-badge.stable {
-            background: linear-gradient(135deg, #ffb3ba, #ffc3c8);
-            color: #8b0000;
-            border: 1px solid #ff9999;
-        }
-
-        .version-badge.beta {
-            background: linear-gradient(135deg, #90ee90, #98fb98);
-            color: #006400;
-            border: 1px solid #7cfc00;
-        }
-
-        .version-badge:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Light theme version badges */
-        body.light-theme .version-badge.stable {
-            background: linear-gradient(135deg, #ffcccb, #ffd6d6);
-            color: #cc0000;
-            border: 1px solid #ff6666;
-        }
-
-        body.light-theme .version-badge.beta {
-            background: linear-gradient(135deg, #c8e6c8, #d4f4d4);
-            color: #004d00;
-            border: 1px solid #66cc66;
-        }
-
-        /* Modal */
-        .modal-content {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--border-radius);
-            color: white;
-        }
-
-        .modal-header {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .modal-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-download {
-            background: var(--primary-gradient);
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .btn-download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-cancel {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 0.75rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .btn-cancel:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(20px);
-            color: rgba(255, 255, 255, 0.8);
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 4rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Light Theme */
-        body.light-theme {
-            background: var(--light-bg);
-            color: #333;
-        }
-
-        body.light-theme::before {
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(240, 147, 251, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(245, 87, 108, 0.1) 0%, transparent 50%);
-        }
-
-        body.light-theme .theme-toggle {
-            background: rgba(255, 255, 255, 0.9);
-            color: #333;
-        }
-
-        body.light-theme .addon-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        body.light-theme .card-title {
-            color: #333;
-        }
-
-        body.light-theme .card-update {
-            color: rgba(51, 51, 51, 0.7);
-            background: rgba(255, 255, 255, 0.7);
-        }
-
-        body.light-theme .modal-content {
-            background: rgba(255, 255, 255, 0.95);
-            color: #333;
-        }
-
-        body.light-theme .modal-header,
-        body.light-theme .modal-footer {
-            border-color: rgba(0, 0, 0, 0.1);
-        }
-
-        body.light-theme .btn-cancel {
-            background: rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            color: #333;
-        }
-
-        body.light-theme .btn-cancel:hover {
-            background: rgba(0, 0, 0, 0.2);
-            color: #333;
-        }
-
-        body.light-theme .footer {
-            background: rgba(255, 255, 255, 0.3);
-            color: rgba(51, 51, 51, 0.8);
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .card-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                padding: 0 0.5rem;
-            }
-
-            .theme-toggle {
-                top: 1rem;
-                right: 1rem;
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-            }
-
-            .logo {
-                width: 60px;
-                margin: 1rem 0 0.5rem 0;
-            }
-
-            .main-title {
-                margin-bottom: 2rem;
-            }
-
-            .card-content {
-                padding: 1.2rem;
-            }
-
-            .card-image {
-                height: 160px;
-            }
-
-            .card-update {
-                flex-direction: column;
-                gap: 0.25rem;
-            }
-
-            .version-badge {
-                margin-left: 0;
-                margin-top: 0.25rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .card-grid {
-                gap: 1rem;
-            }
-
-            .card-image {
-                height: 140px;
-            }
-
-            .card-content {
-                padding: 1rem;
-            }
-
-            .card-title {
-                font-size: 1.1rem;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .addon-card {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        .addon-card:nth-child(1) { animation-delay: 0.1s; }
-        .addon-card:nth-child(2) { animation-delay: 0.2s; }
-        .addon-card:nth-child(3) { animation-delay: 0.3s; }
-        .addon-card:nth-child(4) { animation-delay: 0.4s; }
-        .addon-card:nth-child(5) { animation-delay: 0.5s; }
-        .addon-card:nth-child(6) { animation-delay: 0.6s; }
-        .addon-card:nth-child(7) { animation-delay: 0.7s; }
-        .addon-card:nth-child(8) { animation-delay: 0.8s; }
-        .addon-card:nth-child(9) { animation-delay: 0.9s; }
-        .addon-card:nth-child(10) { animation-delay: 1.0s; }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.5);
+        
+        .text-shadow-minecraft {
+            text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
         }
     </style>
 </head>
-<body>
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle" title="เปลี่ยนธีม">
-        <i id="themeIcon" class="bi bi-moon-fill"></i>
+<body class="min-h-screen bg-gradient-to-br from-minecraft-grass via-minecraft-emerald to-minecraft-dirt minecraft-bg overflow-x-hidden">
+    
+    <!-- Animated Background Elements -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-10 left-10 w-8 h-8 bg-minecraft-diamond opacity-20 animate-float"></div>
+        <div class="absolute top-32 right-20 w-6 h-6 bg-minecraft-gold opacity-30 animate-bounce-slow"></div>
+        <div class="absolute bottom-20 left-1/4 w-10 h-10 bg-minecraft-redstone opacity-25 animate-pulse-slow"></div>
+        <div class="absolute top-1/2 right-10 w-4 h-4 bg-minecraft-emerald opacity-40 animate-wiggle"></div>
+        <div class="absolute bottom-32 right-1/3 w-12 h-12 bg-minecraft-stone opacity-15 animate-float" style="animation-delay: 2s;"></div>
+    </div>
+
+    <!-- Theme Toggle Button -->
+    <button id="themeToggle" class="fixed top-6 right-6 z-50 w-14 h-14 bg-minecraft-obsidian hover:bg-minecraft-stone text-minecraft-gold border-4 border-minecraft-gold hover:border-minecraft-diamond transition-all duration-300 shadow-minecraft hover:shadow-minecraft-hover animate-glow font-pixel text-xs">
+        🌙
     </button>
 
     <!-- Main Container -->
-    <div class="container-fluid py-4">
+    <div class="container mx-auto px-4 py-8 relative z-10">
+        
         <!-- Header -->
-        <div class="text-center mb-5">
-            <img src="l.png" alt="Logo" class="logo">
-            <h1 class="main-title">Bigc Genuis</h1>
-        </div>
+        <header class="text-center mb-12 animate-slide-up">
+            <div class="inline-block mb-6 animate-pixel-dance">
+                <div class="w-24 h-24 bg-minecraft-grass border-8 border-minecraft-wood shadow-minecraft hover:shadow-glow-green transition-all duration-300 flex items-center justify-center text-4xl pixelated">
+                    🎮
+                </div>
+            </div>
+            <h1 class="font-pixel text-4xl md:text-6xl text-white text-shadow-minecraft mb-4 animate-glow">
+                Bigc Genuis
+            </h1>
+            <p class="font-minecraft text-xl text-minecraft-gold text-shadow-minecraft animate-pulse-slow">
+                🎯 Minecraft Addons Collection 🎯
+            </p>
+        </header>
 
         <!-- Cards Grid -->
-        <div class="card-grid">
-            <!-- Card 1 -->
-            <div class="addon-card" tabindex="0" 
-                 data-title="Minecraft แจกแอดออน ธนาคาร สามารถกำหนดดอกเบี้ยได้ Roleplay"
-                 data-img="bank.jpg"
-                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Bank/Bank-0.0.2.mcaddon"
-                 data-update="22/6/2568 @beta">
-                <img src="bank.jpg" class="card-image" alt="Bank Addon">
-                <div class="card-content">
-                    <div class="card-title">Minecraft แจกแอดออน ธนาคาร สามารถกำหนดดอกเบี้ยได้ Roleplay</div>
-                    <div class="card-update">
-                        <span class="update-text">อัปเดตล่าสุด: 22/6/2568</span>
-                        <span class="version-badge beta">@beta</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            
+            <!-- Bank Addon Card -->
+            <div class="card-hover bg-minecraft-wood border-8 border-minecraft-obsidian shadow-minecraft hover:shadow-minecraft-hover transition-all duration-500 animate-slide-up group cursor-pointer" style="animation-delay: 0.1s;">
+                <div class="relative overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-minecraft-gold to-minecraft-dirt flex items-center justify-center text-6xl pixelated group-hover:scale-110 transition-transform duration-300">
+                        🏦
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <span class="bg-minecraft-redstone text-white px-3 py-1 font-pixel text-xs border-2 border-minecraft-obsidian animate-pulse">
+                            BETA
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6 bg-minecraft-stone">
+                    <h3 class="font-minecraft font-bold text-lg text-white mb-3 group-hover:text-minecraft-gold transition-colors duration-300">
+                        ธนาคาร Roleplay
+                    </h3>
+                    <p class="font-minecraft text-sm text-gray-300 mb-4">
+                        แอดออนธนาคาร สามารถกำหนดดอกเบี้ยได้
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-pixel text-xs text-minecraft-emerald">
+                            22/6/2568
+                        </span>
+                        <button class="bg-minecraft-emerald hover:bg-minecraft-grass text-white px-4 py-2 font-pixel text-xs border-4 border-minecraft-obsidian shadow-minecraft hover:shadow-glow-green transition-all duration-300 transform hover:scale-105">
+                            DOWNLOAD
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 2 -->
-            <div class="addon-card" tabindex="0"
-                 data-title="Minecraft แจกแอดออน เก็บเศษเหล็ก Roleplay"
-                 data-img="scarp.jpg"
-                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Scrap%20Addon/Scrap.mcaddon"
-                 data-update="26/3/2568 @stable">
-                <img src="scarp.jpg" class="card-image" alt="Scrap Addon">
-                <div class="card-content">
-                    <div class="card-title">Minecraft แจกแอดออน เก็บเศษเหล็ก Roleplay</div>
-                    <div class="card-update">
-                        <span class="update-text">อัปเดตล่าสุด: 26/3/2568</span>
-                        <span class="version-badge stable">@stable</span>
+            <!-- Scrap Addon Card -->
+            <div class="card-hover bg-minecraft-wood border-8 border-minecraft-obsidian shadow-minecraft hover:shadow-minecraft-hover transition-all duration-500 animate-slide-up group cursor-pointer" style="animation-delay: 0.2s;">
+                <div class="relative overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-minecraft-stone to-minecraft-obsidian flex items-center justify-center text-6xl pixelated group-hover:scale-110 transition-transform duration-300">
+                        ⚙️
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <span class="bg-minecraft-emerald text-white px-3 py-1 font-pixel text-xs border-2 border-minecraft-obsidian animate-glow">
+                            STABLE
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6 bg-minecraft-stone">
+                    <h3 class="font-minecraft font-bold text-lg text-white mb-3 group-hover:text-minecraft-gold transition-colors duration-300">
+                        เก็บเศษเหล็ก Roleplay
+                    </h3>
+                    <p class="font-minecraft text-sm text-gray-300 mb-4">
+                        แอดออนเก็บเศษเหล็กสำหรับ Roleplay
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-pixel text-xs text-minecraft-emerald">
+                            26/3/2568
+                        </span>
+                        <button class="bg-minecraft-emerald hover:bg-minecraft-grass text-white px-4 py-2 font-pixel text-xs border-4 border-minecraft-obsidian shadow-minecraft hover:shadow-glow-green transition-all duration-300 transform hover:scale-105">
+                            DOWNLOAD
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 3 -->
-            <div class="addon-card" tabindex="0"
-                 data-title="Minecraft แจกแอดออน โอนเงิน แบบ Roleplay"
-                 data-img="money.png"
-                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Transfer%20money/Transfer%20money.mcaddon"
-                 data-update="26/3/2568 @stable">
-                <img src="money.png" class="card-image" alt="Money Transfer Addon">
-                <div class="card-content">
-                    <div class="card-title">Minecraft แจกแอดออน โอนเงิน แบบ Roleplay</div>
-                    <div class="card-update">
-                        <span class="update-text">อัปเดตล่าสุด: 26/3/2568</span>
-                        <span class="version-badge stable">@stable</span>
+            <!-- Money Transfer Card -->
+            <div class="card-hover bg-minecraft-wood border-8 border-minecraft-obsidian shadow-minecraft hover:shadow-minecraft-hover transition-all duration-500 animate-slide-up group cursor-pointer" style="animation-delay: 0.3s;">
+                <div class="relative overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-minecraft-gold to-minecraft-emerald flex items-center justify-center text-6xl pixelated group-hover:scale-110 transition-transform duration-300">
+                        💰
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <span class="bg-minecraft-emerald text-white px-3 py-1 font-pixel text-xs border-2 border-minecraft-obsidian animate-glow">
+                            STABLE
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6 bg-minecraft-stone">
+                    <h3 class="font-minecraft font-bold text-lg text-white mb-3 group-hover:text-minecraft-gold transition-colors duration-300">
+                        โอนเงิน Roleplay
+                    </h3>
+                    <p class="font-minecraft text-sm text-gray-300 mb-4">
+                        แอดออนโอนเงินแบบ Roleplay
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-pixel text-xs text-minecraft-emerald">
+                            26/3/2568
+                        </span>
+                        <button class="bg-minecraft-emerald hover:bg-minecraft-grass text-white px-4 py-2 font-pixel text-xs border-4 border-minecraft-obsidian shadow-minecraft hover:shadow-glow-green transition-all duration-300 transform hover:scale-105">
+                            DOWNLOAD
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 4 -->
-            <div class="addon-card" tabindex="0"
-                 data-title="Minecraft แจกแอดออนหมอ Version 1/2 Roleplay"
-                 data-img="health.png"
-                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Medic/Medic.mcaddon"
-                 data-update="22/6/2568 @beta">
-                <img src="health.png" class="card-image" alt="Medic Addon">
-                <div class="card-content">
-                    <div class="card-title">Minecraft แจกแอดออนหมอ Version 1/2 Roleplay</div>
-                    <div class="card-update">
-                        <span class="update-text">อัปเดตล่าสุด: 22/6/2568</span>
-                        <span class="version-badge beta">@beta</span>
+            <!-- Medic Addon Card -->
+            <div class="card-hover bg-minecraft-wood border-8 border-minecraft-obsidian shadow-minecraft hover:shadow-minecraft-hover transition-all duration-500 animate-slide-up group cursor-pointer" style="animation-delay: 0.4s;">
+                <div class="relative overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-minecraft-redstone to-white flex items-center justify-center text-6xl pixelated group-hover:scale-110 transition-transform duration-300">
+                        🏥
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <span class="bg-minecraft-redstone text-white px-3 py-1 font-pixel text-xs border-2 border-minecraft-obsidian animate-pulse">
+                            BETA
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6 bg-minecraft-stone">
+                    <h3 class="font-minecraft font-bold text-lg text-white mb-3 group-hover:text-minecraft-gold transition-colors duration-300">
+                        หมอ Version 1/2
+                    </h3>
+                    <p class="font-minecraft text-sm text-gray-300 mb-4">
+                        แอดออนหมอสำหรับ Roleplay
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-pixel text-xs text-minecraft-emerald">
+                            22/6/2568
+                        </span>
+                        <button class="bg-minecraft-emerald hover:bg-minecraft-grass text-white px-4 py-2 font-pixel text-xs border-4 border-minecraft-obsidian shadow-minecraft hover:shadow-glow-green transition-all duration-300 transform hover:scale-105">
+                            DOWNLOAD
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 5 -->
-            <div class="addon-card" tabindex="0"
-                 data-title="Minecraft แจกแอดซื้อขาย กำหนดได้"
-                 data-img="buy.png"
-                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Buy%20&%20Sell/Buy%20&%20Sell.mcaddon"
-                 data-update="26/3/2568 @stable">
-                <img src="buy.png" class="card-image" alt="Buy & Sell Addon">
-                <div class="card-content">
-                    <div class="card-title">Minecraft แจกแอดซื้อขาย กำหนดได้</div>
-                    <div class="card-update">
-                        <span class="update-text">อัปเดตล่าสุด: 26/3/2568</span>
-                        <span class="version-badge stable">@stable</span>
+            <!-- Buy & Sell Card -->
+            <div class="card-hover bg-minecraft-wood border-8 border-minecraft-obsidian shadow-minecraft hover:shadow-minecraft-hover transition-all duration-500 animate-slide-up group cursor-pointer" style="animation-delay: 0.5s;">
+                <div class="relative overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-minecraft-diamond to-minecraft-emerald flex items-center justify-center text-6xl pixelated group-hover:scale-110 transition-transform duration-300">
+                        🛒
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <span class="bg-minecraft-emerald text-white px-3 py-1 font-pixel text-xs border-2 border-minecraft-obsidian animate-glow">
+                            STABLE
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6 bg-minecraft-stone">
+                    <h3 class="font-minecraft font-bold text-lg text-white mb-3 group-hover:text-minecraft-gold transition-colors duration-300">
+                        ซื้อขาย กำหนดได้
+                    </h3>
+                    <p class="font-minecraft text-sm text-gray-300 mb-4">
+                        แอดออนซื้อขายที่กำหนดได้
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-pixel text-xs text-minecraft-emerald">
+                            26/3/2568
+                        </span>
+                        <button class="bg-minecraft-emerald hover:bg-minecraft-grass text-white px-4 py-2 font-pixel text-xs border-4 border-minecraft-obsidian shadow-minecraft hover:shadow-glow-green transition-all duration-300 transform hover:scale-105">
+                            DOWNLOAD
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 6 -->
-            <div class="addon-card" tabindex="0"
-                 data-title="Minecraft แจกแอดออน ตำรวจจับโจร Roleplay"
-                 data-img="police.png"
-                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Police/Police.mcaddon"
-                 data-update="26/3/2568">
-                <img src="police.png" class="card-image" alt="Police Addon">
-                <div class="card-content">
-                    <div class="card-title">Minecraft แจกแอดออน ตำรวจจับโจร Roleplay</div>
-                    <div class="card-update">
-                        <span class="update-text">อัปเดตล่าสุด: 26/3/2568</span>
-                        <span class="version-badge stable">@stable</span>
+            <!-- Police Addon Card -->
+            <div class="card-hover bg-minecraft-wood border-8 border-minecraft-obsidian shadow-minecraft hover:shadow-minecraft-hover transition-all duration-500 animate-slide-up group cursor-pointer" style="animation-delay: 0.6s;">
+                <div class="relative overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-blue-600 to-minecraft-obsidian flex items-center justify-center text-6xl pixelated group-hover:scale-110 transition-transform duration-300">
+                        👮
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <span class="bg-minecraft-emerald text-white px-3 py-1 font-pixel text-xs border-2 border-minecraft-obsidian animate-glow">
+                            STABLE
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6 bg-minecraft-stone">
+                    <h3 class="font-minecraft font-bold text-lg text-white mb-3 group-hover:text-minecraft-gold transition-colors duration-300">
+                        ตำรวจจับโจร
+                    </h3>
+                    <p class="font-minecraft text-sm text-gray-300 mb-4">
+                        แอดออนตำรวจจับโจร Roleplay
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-pixel text-xs text-minecraft-emerald">
+                            26/3/2568
+                        </span>
+                        <button class="bg-minecraft-emerald hover:bg-minecraft-grass text-white px-4 py-2 font-pixel text-xs border-4 border-minecraft-obsidian shadow-minecraft hover:shadow-glow-green transition-all duration-300 transform hover:scale-105">
+                            DOWNLOAD
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 7 -->
-            <div class="addon-card" tabindex="0"
-                 data-title="Minecraft แจกแอดออน สุ่มของ กำหนดของได้ เวอร์ชั่นล่าสุด!!"
-                 data-img="random.png"
-                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Random%20items/Random%20items.mcaddon"
-                 data-update="23/10/2567">
-                <img src="random.png" class="card-image" alt="Random Items Addon">
-                <div class="card-content">
-                    <div class="card-title">Minecraft แจกแอดออน สุ่มของ กำหนดของได้ เวอร์ชั่นล่าสุด!!</div>
-                    <div class="card-update">
-                        <span class="update-text">อัปเดตล่าสุด: 23/10/2567</span>
-                        <span class="version-badge stable">@stable</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 8 -->
-            <div class="addon-card" tabindex="0"
-                 data-title="Minecraft แจกแอดออนจกปูน Roleplay"
-                 data-img="poon.png"
-                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Cement/Cement.mcaddon"
-                 data-update="23/10/2567">
-                <img src="poon.png" class="card-image" alt="Cement Addon">
-                <div class="card-content">
-                    <div class="card-title">Minecraft แจกแอดออนจกปูน Roleplay</div>
-                    <div class="card-update">
-                        <span class="update-text">อัปเดตล่าสุด: 23/10/2567</span>
-                        <span class="version-badge stable">@stable</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 9 -->
-            <div class="addon-card" tabindex="0"
-                 data-title="Minecraft แจกแอดออน เกี่ยวกับยานพาหนะ Roleplay"
-                 data-img="vehicle.png"
-                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/Vehicle%20System/Vehicle%20System.mcpack"
-                 data-update="26/3/25">
-                <img src="vehicle.png" class="card-image" alt="Vehicle Addon">
-                <div class="card-content">
-                    <div class="card-title">Minecraft แจกแอดออน เกี่ยวกับยานพาหนะ Roleplay</div>
-                    <div class="card-update">
-                        <span class="update-text">อัปเดตล่าสุด: 26/3/2568</span>
-                        <span class="version-badge" style="background: linear-gradient(135deg, #bdbdbd, #e0e0e0); color: #757575; border: 1px solid #bdbdbd;">หยุดอัปเดต</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 10 -->
-            <div class="addon-card" tabindex="0"
-                 data-title="Minecraft Addon RealTime Sync"
-                 data-img="realtime.png"
-                 data-link="https://github.com/bigcgenuis/Dowload-Addon/raw/refs/heads/main/RealTime%20Sync/RealTimeSync.mcpack"
-                 data-update="22/6/2568">
-                <img src="realtime.png" class="card-image" alt="RealTime Sync Addon">
-                <div class="card-content">
-                    <div class="card-title">Minecraft Addon RealTime Sync</div>
-                    <div class="card-update">
-                        <span class="update-text">อัปเดตล่าสุด: 22/6/2568</span>
-                        <span class="version-badge beta">@beta</span>
-                    </div>
-                </div>
-            </div>
         </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-16 animate-slide-up" style="animation-delay: 0.8s;">
+            <div class="inline-block bg-minecraft-obsidian border-4 border-minecraft-gold px-8 py-4 shadow-minecraft">
+                <p class="font-pixel text-minecraft-gold text-sm animate-glow">
+                    🎮 Made with ❤️ for Minecraft Community 🎮
+                </p>
+            </div>
+        </footer>
+
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="downloadModalLabel"></h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <img id="modalImage" src="/placeholder.svg" alt="" class="img-fluid rounded mb-3" style="max-height: 250px; object-fit: cover;">
-                    <div class="mt-3">
-                        <span class="badge bg-primary rounded-pill fs-6" id="modalUpdate"></span>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-center gap-3">
-                    <a id="downloadBtn" href="#" class="btn btn-download" download>
-                        <i class="bi bi-download me-2"></i>ดาวน์โหลด
-                    </a>
-                    <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">
-                        <i class="bi bi-x-circle me-2"></i>ยกเลิก
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p class="mb-0">Copyright © 2024-2025 Bigc Genius. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Function to create version badges
-        function createVersionBadge(updateText) {
-            const updateElement = document.createElement('div');
-            updateElement.className = 'card-update';
-            
-            if (updateText.includes('@beta')) {
-                const textPart = updateText.replace('@beta', '').trim();
-                updateElement.innerHTML = `
-                    <span class="update-text">${textPart}</span>
-                    <span class="version-badge beta">@beta</span>
-                `;
-            } else if (updateText.includes('@stable')) {
-                const textPart = updateText.replace('@stable', '').trim();
-                updateElement.innerHTML = `
-                    <span class="update-text">${textPart}</span>
-                    <span class="version-badge stable">@stable</span>
-                `;
-            } else {
-                updateElement.innerHTML = `<span class="update-text">${updateText}</span>`;
-            }
-            
-            return updateElement;
-        }
-
-        // Modal functionality
-        document.querySelectorAll('.addon-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const title = this.getAttribute('data-title');
-                const img = this.getAttribute('data-img');
-                const link = this.getAttribute('data-link');
-                const update = this.getAttribute('data-update');
-                
-                document.getElementById('modalImage').src = img;
-                document.getElementById('modalImage').alt = title;
-                document.getElementById('downloadModalLabel').textContent = title;
-                document.getElementById('downloadBtn').href = link;
-                
-                // Create version badge for modal
-                const modalUpdate = document.getElementById('modalUpdate');
-                if (update.includes('@beta')) {
-                    modalUpdate.className = 'badge rounded-pill fs-6 version-badge beta';
-                    modalUpdate.textContent = 'อัปเดตล่าสุด: ' + update.replace('@beta', '').trim() + ' @beta';
-                } else if (update.includes('@stable')) {
-                    modalUpdate.className = 'badge rounded-pill fs-6 version-badge stable';
-                    modalUpdate.textContent = 'อัปเดตล่าสุด: ' + update.replace('@stable', '').trim() + ' @stable';
-                } else {
-                    modalUpdate.className = 'badge bg-primary rounded-pill fs-6';
-                    modalUpdate.textContent = 'อัปเดตล่าสุด: ' + update;
-                }
-                
-                new bootstrap.Modal(document.getElementById('downloadModal')).show();
-            });
-
-            // Keyboard accessibility
-            card.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    this.click();
-                }
-            });
-        });
-
         // Theme toggle functionality
         const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        
-        function setTheme(isLight) {
-            if (isLight) {
-                document.body.classList.add('light-theme');
-                themeIcon.className = 'bi bi-sun-fill';
-            } else {
-                document.body.classList.remove('light-theme');
-                themeIcon.className = 'bi bi-moon-fill';
-            }
-        }
+        let isDark = true;
 
         themeToggle.addEventListener('click', () => {
-            const isCurrentlyLight = document.body.classList.contains('light-theme');
-            setTheme(!isCurrentlyLight);
-            localStorage.setItem('theme', !isCurrentlyLight ? 'light' : 'dark');
+            isDark = !isDark;
+            if (isDark) {
+                document.body.className = document.body.className.replace('from-blue-900 via-purple-900 to-indigo-900', 'from-minecraft-grass via-minecraft-emerald to-minecraft-dirt');
+                themeToggle.textContent = '🌙';
+            } else {
+                document.body.className = document.body.className.replace('from-minecraft-grass via-minecraft-emerald to-minecraft-dirt', 'from-blue-900 via-purple-900 to-indigo-900');
+                themeToggle.textContent = '☀️';
+            }
         });
 
-        // Load saved theme
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme');
-            setTheme(savedTheme === 'light');
+        // Add click handlers for download buttons
+        document.querySelectorAll('button:contains("DOWNLOAD")').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Add download logic here
+                button.textContent = 'DOWNLOADING...';
+                setTimeout(() => {
+                    button.textContent = 'DOWNLOAD';
+                }, 2000);
+            });
         });
 
-        // Add smooth scroll behavior
-        document.documentElement.style.scrollBehavior = 'smooth';
+        // Add floating animation to background elements
+        const floatingElements = document.querySelectorAll('.animate-float');
+        floatingElements.forEach((element, index) => {
+            element.style.animationDelay = `${index * 0.5}s`;
+        });
     </script>
+
 </body>
 </html>
